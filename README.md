@@ -11,13 +11,16 @@ Check out the LIVE VERSION:
 https://coronatracer.pythonanywhere.com/Dashboard
 
 Tech Stack used:
+
 ---DASHBOARD---
+
 UI(Frontend) - HTML, CSS, JS, JS Addons- Interactive Chart and Tables
 Backend - Flask(Py), Apscheduler, MongoDB client
 Analytics -  Numpy, Pandas, Seaborn and more
 DB - MongoDB cluster
 
 ---DATA COLLECTION---
+
 Google form integrated to UI
 -Service: Google App Script application to communicate with Mongo Stitch Service
 -MongoDB Cluster through Mongo Stitch Service
