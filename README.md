@@ -3,7 +3,7 @@ This is a web platform to track COVID Cases in India and also provide a robust a
 
 This application get's user feedback on symptops, past disease history, local history, travel history and more to determine personal risk factor.
 This individual factor with location is pooled to generate locality risk factor.
-Presently provide- Symtomatic health index, Past-Disease risk factor, Inventory Preparedness Index
+Presently provide- Symptomatic health index, Past-Disease risk factor, Inventory Preparedness Index
 
 Along with this the plaform also provides a continous self updating tracking of active, total, recovered and deceased cases in India across all states and cities.
 
