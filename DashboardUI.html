@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Corona Disease Tracker</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css"
+    />
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+
+    <!-- Google News API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js"type="text/javascript"></script>
+    <!-- <script src="'https://code.jquery.com/jquery-3.4.1.min.js'"></script> -->
+
+    <!-- Add to Calendar feature -->
+    <script
+      type="text/javascript"
+      src="https://addevent.com/libs/atc/1.6.1/atc.min.js"
+      async
+      defer
+    ></script>
+    <link rel="stylesheet" href="styleDashboard.css" />
+  </head>
+
+  <body>
+    <div class="container" style="width: 100%;">
+      <h1 class="brand" align="center"><span>Corona Disease</span> Tracker</h1>
+      <div class="wrapper">
+        <!-- <div class="company-info">
+        username stores user name
+        <h3>Welcome <label id='username'></label></h3>
+        <ul>
+          <li><i class="fa fa-road"></i> <button class="buttonmod" onclick="getLocation();" id='enableProfile'>Basic
+              info (Needed once)</button></li>
+
+          <li><i class="fa fa-road"></i> <button class="buttonmod" id='enableAssessment'>[Daily] Complete today's
+              assessment</button></li>
+          <li><i class="fa fa-road"></i> <button class="buttonred" id='enableCoronaPositive'>Declare yourself Corona
+              Positive</button></li>
+        </ul>
+      </div> -->
+
+        <div class="contact">
+          <div id="Home" style="display: block;">
+            <!-- style="padding-left: 150px;" -->
+            <h1 align="center" class="heading">DASHBOARD</h1>
+          </div>
+
+          <div align="center" id="Login" style="display: block;">
+            <!-- style="padding-left: 150px;" -->
+            <label style="font-size: 30px;"><b>ENTER YOUR EMAIL ID: </b></label>
+            <input id="emailinput" />
+            <button type="button" onclick="Login();" id="LoginButton">
+              <b>LOGIN</b>
+            </button>
+            <br />
+            <label style="font-size: 23px;"
+              >*you need to sign up on <a href="https://coronatracer.pythonanywhere.com/">basic info page </a> in order
+              to get personalized assessment and analysis.</label
+            >
+            <label style="font-size: 18px;"
+              >*Coming soon features: Patient Analysis, News & Alert feed, Custom User specific graphical analytics, neighbourhood symptom heat map and more.</label
+            >
+          </div>
+
+          <div class="container" align="center">
+            <section id="our-stats">
+              <div class="row text-center">
+                <div class="col">
+                  <div
+                    class="counter"
+                    style="background-color: rgba(241, 35, 35, 0.877);"
+                  >
+                    <p class="count-text">Total</p>
+                    <h2
+                      class="timer count-title count-number"
+                      data-to="100"
+                      data-speed="1500"
+                      id="mainMeterTotal"
+                    >
+                      Loading
+                    </h2>
+                    <p class="count-text">+<b id="mainMeterTotalDelta">Loading</b></p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div
+                    class="counter"
+                    style="background-color: rgba(52, 157, 199, 0.87);"
+                  >
+                    <!-- <i class="fa fa-coffee fa-2x text-green"></i> -->
+                    <p class="count-text">Active</p>
+                    <h2
+                      class="timer count-title count-number"
+                      data-to="1700"
+                      data-speed="1500"
+                      id="mainMeterActive"
+                    >
+                      Loading
+                    </h2>
+                    <p class="count-text">
+                      +<b id="mainMeterActiveDelta">Loading</b>
+                    </p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div
+                    class="counter"
+                    style="background-color: rgba(28, 192, 77, 0.87);"
+                  >
+                    <!-- <i class="fa fa-lightbulb-o fa-2x text-green"></i> -->
+                    <p class="count-text">Recovered</p>
+                    <h2
+                      class="timer count-title count-number"
+                      data-to="11900"
+                      data-speed="1500"
+                      id="mainMeterRec"
+                    >
+                      Loading
+                    </h2>
+                    <p class="count-text">
+                      +<b id="mainMeterRecDelta">Loading</b>
+                    </p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div
+                    class="counter"
+                    style="background-color: rgba(34, 38, 75, 0.884);"
+                  >
+                    <!-- <i class="fa fa-bug fa-2x text-green"></i> -->
+                    <p class="count-text">Deceased</p>
+                    <h2
+                      class="timer count-title count-number"
+                      data-to="157"
+                      data-speed="1500"
+                      id="mainMeterDec"
+                    >
+                      Loading
+                    </h2>
+                    <p class="count-text">
+                      +<b id="mainMeterDecDelta">Loading</b>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- <table align="center" id="StateALLtable" border="1"></table> -->
+
+            <!-- <div id="StateTotalTable" style="display: block;"> rgb(245, 239, 214)
+              
+            </div> -->
+            <label align="center" style="font-size: 15px;"
+              >*Data updated every 15 mins. Scroll down for chart & table.</label
+            >
+          </div>
+
+          <div id="PersonalInfo" style="border: double; background-color: rgba(243, 247, 244, 0.788); border-radius: 15px;">
+            <div align="center" id="Welcome" style="display: block;">
+              <label style="font-size: 22px;" id="welcomenotify"><b >LOGIN TO EVALUATE</b></label>
+              <br />
+              <div id="warningregister" style="display: block;">
+                <label style="font-size: 16px;" >
+                  *you need to sign up on <a href="https://coronatracer.pythonanywhere.com/">basic info page </a> and fill in atleast one daily assessment in
+                 order to get personalized assessment and analysis.</label
+                >
+              </div>
+            </div>
+            <div id="PersonalStats" style="display: none;">
+              <div class="row text-center">
+                <div class="col">
+                  <label id="idState" style="font-size: 25px;"> State</label>
+                  <br />
+                </div>
+                <div class="col">
+                  <label id="idCity" style="font-size: 25px;"> City</label>
+                  <br />
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                  <div
+                    class="row text-center"
+                    style="padding-left: 105px; padding-right: 15px;"
+                  >
+                    <div class="col2">
+                      <div
+                        class="counter3"
+                        style="background-color: rgba(241, 35, 35, 0.877);"
+                      >
+                        <p class="count-text">Total</p>
+                        <h2
+                          class="timer count-title count-number"
+                          data-to="11900"
+                          data-speed="1500"
+                          id="mainMeterTotState"
+                        >
+                          -
+                        </h2>
+                        <p class="count-text">
+                          <b id="mainMeterRecDeltaState">-</b>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- <div class="col2">
+                  <div class="counter3" style="background-color: rgba(67, 188, 224, 0.527);">
+                    <p class="count-text">Recovered</p>
+                    <h2 class="timer count-title count-number" data-to="11900" data-speed="1500" id="mainMeterRecState">
+                      Loading
+                    </h2>
+                    <p class="count-text">
+                      +<b id="mainMeterRecDeltaState">Loading</b>
+                    </p>
+                  </div>
+                </div> -->
+                    <div class="col2">
+                      <div
+                        class="counter3"
+                        style="background-color: rgba(28, 192, 77, 0.87);"
+                      >
+                        <p class="count-text">Recovered</p>
+                        <h2
+                          class="timer count-title count-number"
+                          data-to="11900"
+                          data-speed="1500"
+                          id="mainMeterRecState"
+                        >
+                          -
+                        </h2>
+                        <p class="count-text">
+                          <b id="mainMeterRecDeltaState">-</b>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col2">
+                      <div
+                        class="counter3"
+                        style="background-color: rgba(34, 38, 75, 0.884);"
+                      >
+                        <p class="count-text">Deceased</p>
+                        <h2
+                          class="timer count-title count-number"
+                          data-to="11900"
+                          data-speed="1500"
+                          id="mainMeterDecState"
+                        >
+                          -
+                        </h2>
+                        <p class="count-text">
+                          <b id="mainMeterRecDeltaState">-</b>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col"></div> -->
+                <div
+                  class="row text-center"
+                  style="padding-left: 110px; padding-right: 105px;"
+                >
+                  <div class="col2">
+                    <div
+                      class="counter3"
+                      style="background-color: rgba(241, 35, 35, 0.877);"
+                    >
+                      <p class="count-text">Hospitalized</p>
+                      <h2
+                        class="timer count-title count-number"
+                        data-to="11900"
+                        data-speed="1500"
+                        id="mainMeterHosCity"
+                      >
+                        -
+                      </h2>
+                      <p class="count-text">
+                        <b id="mainMeterRecDeltaState">-</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col2">
+                    <div
+                      class="counter3"
+                      style="background-color: rgba(28, 192, 77, 0.87);"
+                    >
+                      <p class="count-text">Recovered</p>
+                      <h2
+                        class="timer count-title count-number"
+                        data-to="11900"
+                        data-speed="1500"
+                        id="mainMeterRecCity"
+                      >
+                        -
+                      </h2>
+                      <p class="count-text">
+                        <b id="mainMeterRecDeltaState">-</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col2">
+                    <div
+                      class="counter3"
+                      style="background-color: rgba(34, 38, 75, 0.884);"
+                    >
+                      <p class="count-text">Deceased</p>
+                      <h2
+                        class="timer count-title count-number"
+                        data-to="11900"
+                        data-speed="1500"
+                        id="mainMeterDecCity"
+                      >
+                        -
+                      </h2>
+                      <p class="count-text">
+                        <b id="mainMeterRecDeltaState">-</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ----------2ND COL user-->
+              <div class="row text-center">
+                <div class="col">
+                  <label id="idState" style="font-size: 25px;">Evaluation : Self</label>
+                  <br />
+                </div>
+                <div class="col">
+                  <label id="idCity" style="font-size: 25px;"> Evaluation: <span id="locality"> Neighbourhood</span></label>
+                  <br />
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                  <div
+                    class="row text-center"
+                    style="padding-left: 105px; padding-right: 15px;"
+                  >
+                    <div class="col2">
+                      <div
+                        class="counter3"
+                        id="colSym" 
+                        
+                      >
+                        <p class="count-text">Symptomatic Scorecard</p>
+                        <h2
+                          class="timer count-title count-number"
+                          data-to="11900"
+                          data-speed="1500"
+                          id="idSympTot"
+                        >
+                          -
+                        </h2>
+                        <p class="count-text">
+                          <b style="font-size: 11px;">'lower is better'</b>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- <div class="col2">
+                    <div class="counter3" style="background-color: rgba(67, 188, 224, 0.527);">
+                    <p class="count-text">Recovered</p>
+                    <h2 class="timer count-title count-number" data-to="11900" data-speed="1500" id="mainMeterRecState">
+                      Loading
+                    </h2>
+                    <p class="count-text">
+                      +<b id="mainMeterRecDeltaState">Loading</b>
+                    </p>
+                    </div>
+                    </div> -->
+                    <div class="col2">
+                      <div
+                        class="counter3"
+                        id="colInv" 
+                        
+                      >
+                        <p class="count-text">Inventory  Scorecard</p>
+                        <h2
+                          class="timer count-title count-number"
+                          data-to="11900"
+                          data-speed="1500"
+                          id="idInv"
+                        >
+                          -
+                        </h2>
+                        <p class="count-text">
+                          <b style="font-size: 11px;">'higher is better'</b>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col2">
+                      <div
+                        class="counter3"
+                        id="colPast" 
+                       
+                      >
+                        <p class="count-text">Past Screening Scorecard</p>
+                        <h2
+                          class="timer count-title count-number"
+                          data-to="11900"
+                          data-speed="1500"
+                          id="idPastHealth"
+                        >
+                          -
+                        </h2>
+                        <p class="count-text">
+                          <b style="font-size: 11px;">'lower is better'</b>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col"></div> -->
+
+                <!-- Neighbourhood data --> 
+                <div
+                  class="row text-center"
+                  style="padding-left: 110px; padding-right: 105px;"
+                >
+                  <div class="col2">
+                    <div
+                      class="counter3"
+                      id="colSymNB"
+                    >
+                      <p class="count-text">Symptomatic Scorecard</p>
+                      <h2
+                        class="timer count-title count-number"
+                        data-to="11900"
+                        data-speed="1500"
+                        id="idSympTotNB"
+                      >
+                        -
+                      </h2>
+                      <p class="count-text">
+                        <b style="font-size: 11px;">'lower is better'</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col2">
+                    <div
+                      class="counter3"
+                      id="colInvNB"
+                    >
+                      <p class="count-text">Inventory  Scorecard</p>
+                      <h2
+                        class="timer count-title count-number"
+                        data-to="11900"
+                        data-speed="1500"
+                        id="idInvNB"
+                      >
+                        -
+                      </h2>
+                      <p class="count-text">
+                        <b style="font-size: 11px;">'higher is better'</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col2">
+                    <div
+                      class="counter3"
+                      id="colPastNB"
+                    >
+                      <p class="count-text">Past Screening Scorecard</p>
+                      <h2
+                        class="timer count-title count-number"
+                        data-to="11900"
+                        data-speed="1500"
+                        id="idPastHealthNB"
+                      >
+                        -
+                      </h2>
+                      <p class="count-text">
+                        <b style="font-size: 11px;">'lower is better'</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <br>           
+
+            </div>
+          </div>
+          <br />
+          <!-- 74px -->
+          <div align="center" id="chartloading" style=" height:2000px; line-height:30px; text-align:center; padding-left:74px ;height:50px; width:1000px; display: block;">
+            <label style="vertical-align: middle;">Chart & Table Loading....</label>
+        </div>
+          <div align="center" id="chartenable" class="chart-container" style="padding-left:74px ;height:500px; width:1000px; display: none;">
+              <canvas id="canvas" class="chartjs-render-monitor" ></canvas>
+          </div>
+
+           <!-- News Feed -->
+           <!-- <div id="feedControl">Loading...</div> -->
+          <!-- <div class="col">
+            <div
+              class="counter"
+              style="background-color: rgba(34, 38, 75, 0.884);"
+            >
+              <h2
+                class="timer count-title count-number"
+                data-to="157"
+                data-speed="1500"
+                align="center"
+                style="background-color: rgba(255, 255, 255, 0.884);"
+              >
+              <button id="ShowState" onclick="ShowStateResult();" style="width: 101%;">Click to View Statewise</button>
+              </h2>
+            </div>
+          </div> -->
+          <!-- <div class="row text-center" style="padding-left: 110px; padding-right: 15px;">
+            <div style="width:75%;">
+              <canvas id="canvas"  class="chartjs-render-monitor"></canvas>
+            </div> -->
+          <div class="table-box dark-theme" id="StateTable">
+            <div class="table-responsive">
+              <table class="table" id="StateALLtable"></table>
+            </div>
+          </div>
+
+          <!-- <h3>Email Us</h3> -->
+          <div class="alert">Your message has been sent</div>
+
+          <form id="contactForm"></form>
+        </div>
+      </div>
+    </div>
+    <!-- 
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+    <script src="mainDashboard.js"></script>
+    <!-- <script>
+    $(document).ready( function () {
+    $('#StateALLtable').DataTable();
+} );
+  </script> -->
+  </body>
+</html>
