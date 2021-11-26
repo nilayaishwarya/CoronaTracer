@@ -7,6 +7,10 @@ Presently provide- Symptomatic health index, Past-Disease risk factor, Inventory
 
 Along with this the plaform also provides a continous self updating tracking of active, total, recovered and deceased cases in India across all states and cities.
 
+DEMO:
+
+https://user-images.githubusercontent.com/53421860/143635192-9426dba3-c075-4142-aa45-de328ee7e9e0.mp4
+
 Check out the LIVE VERSION:
 https://coronatracer.pythonanywhere.com/Dashboard
 
